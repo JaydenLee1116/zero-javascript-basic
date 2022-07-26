@@ -68,11 +68,15 @@
       const $result = document.querySelector('#result');
 
       const onClickNumber = (e) => {
-        if (operator) {
-          numTwo += e.target.textContent;
-        } else {
+        if (!operator) {
           numOne += e.target.textContent;
+          $result.value += e.target.textContent;
+          return;
         }
+        if (!numTwo) {
+          $result.value = '';
+        }
+        numTwo += e.target.textContent;
         $result.value += e.target.textContent;
       };
 

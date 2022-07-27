@@ -76,11 +76,12 @@
           }
         });
 
+        tries.push(value);
+
         $logs.append(
-          `${value}: ${strike} 스트라이크, ${ball} 볼`,
+          `${value}: ${strike} 스트라이크, ${ball} 볼 ⚾ ${tries.length}번째 시도`,
           document.createElement('br')
         );
-        tries.push(value);
       });
     </script>
   </body>

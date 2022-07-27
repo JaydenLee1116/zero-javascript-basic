@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Number-Baseball</title>
+  </head>
+  <body>
+    <form action="" id="form">
+      <input type="text" id="input" />
+      <button>확인</button>
+    </form>
+    <div id="logs"></div>
+    <script>
+      const $input = document.querySelector('#input');
+      const $form = document.querySelector('#form');
+      const $logs = document.querySelector('#logs');
+
+      const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+      const answer = [];
+
+      for (let i = 0; i < 4; i++) {
+        const index = Math.floor(Math.random() * numbers.length);
+        answer.push(numbers[index]);
+        numbers.splice(index, 1);
+      }
+
+      const tries = [];
+
+      function checkInput(input) {}
+      $form.addEventListener('submit', (e) => {
+        event.preventDefault();
+        const value = $input.value;
+        $input.value = '';
+        const valid = checkInput(value);
+      });
+    </script>
+  </body>
+</html>

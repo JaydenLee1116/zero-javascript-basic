@@ -29,12 +29,56 @@
 
       const tries = [];
 
-      function checkInput(input) {}
+      function checkInput(input) {
+        if (input.length !== 4) {
+          return alert('4자리 숫자를 입력해주세요.');
+        }
+        if (new Set(input).size !== 4) {
+          return alert('중복되지 않게 입력해주세요.');
+        }
+        if (tries.includes(input)) {
+          return alert('이미 시도한 값입니다.');
+        }
+        return true;
+      }
       $form.addEventListener('submit', (e) => {
-        event.preventDefault();
+        event.preventDefault(); // 폼 태그의 기본 동작을 취소 (form은 submit 이벤트가 발생 시 브라우저를 새로고침하기 때문)
+
         const value = $input.value;
         $input.value = '';
         const valid = checkInput(value);
+        if (!valid) return;
+        if (answer.join('') === value) {
+          $logs.textContent = '홈런!';
+          return;
+        }
+        if (tries.length >= 9) {
+          const message = document.createTextNode(
+            `패배! 정답은 ${answer.join('')}입니다!`
+          );
+          $logs.appendChild(message);
+          return;
+        }
+
+        // 스트라이크 및 볼 검사
+
+        let strike = 0;
+        let ball = 0;
+        for (let i = 0; i < answer.length; i++) {
+          const index = value.indexOf(answer[i]);
+          if (index > -1) {
+            if (index === i) {
+              strike++;
+            } else {
+              ball++;
+            }
+          }
+        }
+        $logs.append(
+          `${value}: ${strike} 스트라이크, ${ball} 볼`,
+          document.createElement('br')
+        );
+        tries.push(value);
       });
     </script>
   </body>

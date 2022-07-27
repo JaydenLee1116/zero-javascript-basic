@@ -81,6 +81,10 @@
       };
 
       const onClickOperator = (e) => {
+        if (operator) {
+          numOne = $result.value;
+          numTwo = '';
+        }
         if (numOne) {
           operator = e.target.textContent;
           $operator.value = e.target.textContent;
@@ -101,11 +105,38 @@
       document
         .querySelector('#plus')
         .addEventListener('click', onClickOperator);
-      document.querySelector('#minus').addEventListener('click', () => {});
-      document.querySelector('#multiply').addEventListener('click', () => {});
-      document.querySelector('#divide').addEventListener('click', () => {});
-      document.querySelector('#clear').addEventListener('click', () => {});
-      document.querySelector('#calculate').addEventListener('click', () => {});
+      document
+        .querySelector('#minus')
+        .addEventListener('click', onClickOperator);
+      document
+        .querySelector('#multiply')
+        .addEventListener('click', onClickOperator);
+      document
+        .querySelector('#divide')
+        .addEventListener('click', onClickOperator);
+      document.querySelector('#calculate').addEventListener('click', () => {
+        if (numTwo) {
+          if (operator === '+') {
+            $result.value = parseInt(numOne) + parseInt(numTwo);
+            numOne = parseInt(numOne) + parseInt(numTwo);
+          } else if (operator === '-') {
+            $result.value = numOne - numTwo;
+          } else if (operator === '*') {
+            $result.value = numOne * numTwo;
+          } else {
+            $result.value = numOne / numTwo;
+          }
+        } else {
+          alert('숫자를 입력하세요');
+        }
+      });
+      document.querySelector('#clear').addEventListener('click', () => {
+        numOne = '';
+        operator = '';
+        numTwo = '';
+        $operator.value = '';
+        $result.value = '';
+      });
     </script>
   </body>
 </html>

@@ -28,6 +28,7 @@
       }
 
       const tries = [];
+      let outCount = 0;
 
       function checkInput(input) {
         if (input.length !== 4) {
@@ -41,6 +42,7 @@
         }
         return true;
       }
+
       $form.addEventListener('submit', (e) => {
         event.preventDefault(); // 폼 태그의 기본 동작을 취소 (form은 submit 이벤트가 발생 시 브라우저를 새로고침하기 때문)
 
@@ -77,6 +79,21 @@
         });
 
         tries.push(value);
+
+        if (strike === 0 && ball === 0) {
+          outCount++;
+          $logs.append(
+            `${outCount} 아웃입니다. ⚾ ${tries.length}번째 시도`,
+            document.createElement('br')
+          );
+          if (outCount >= 3) {
+            const message = document.createTextNode(
+              `패배! 정답은 ${answer.join('')}입니다!`
+            );
+            $logs.appendChild(message);
+          }
+          return;
+        }
 
         $logs.append(
           `${value}: ${strike} 스트라이크, ${ball} 볼 ⚾ ${tries.length}번째 시도`,

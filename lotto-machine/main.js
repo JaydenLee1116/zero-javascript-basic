@@ -20,9 +20,20 @@ console.log(winBalls, bonus);
 // 왜냐하면 arr.slice()는 깊은 복사가 되는 경우로 생긴 것만 다른 아예 다른 객체를 만들기 때문!
 
 const $result = document.querySelector('#result');
-setTimeout(() => {
+const $bonus = document.querySelector('#bonus');
+
+const showBall = (number, $target) => {
   const $ball = document.createElement('div');
   $ball.className = 'ball';
-  $ball.textContent = winBalls[0];
-  $result.appendChild($ball);
-}, 1000);
+  $ball.textContent = number;
+  $target.appendChild($ball);
+};
+
+for (let i = 0; i < 6; i++) {
+  setTimeout(() => {
+    showBall(winBalls[i], $result);
+  }, 1000 * (i + 1));
+}
+setTimeout(() => {
+  showBall(bonus, $bonus);
+}, 1000 * 7);

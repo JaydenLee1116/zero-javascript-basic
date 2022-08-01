@@ -26,14 +26,38 @@ const showBall = (number, $target) => {
   const $ball = document.createElement('div');
   $ball.className = 'ball';
   $ball.textContent = number;
+  if (number < 10) {
+    $ball.style.backgroundColor = 'red';
+    $ball.style.color = 'white';
+  } else if (number < 20) {
+    $ball.style.backgroundColor = 'orange';
+  } else if (number < 30) {
+    $ball.style.backgroundColor = 'yellow';
+  } else if (number < 40) {
+    $ball.style.backgroundColor = 'blue';
+    $ball.style.color = 'white';
+  } else {
+    $ball.style.backgroundColor = 'green';
+    $ball.style.color = 'white';
+  }
   $target.appendChild($ball);
 };
 
-for (let i = 0; i < 6; i++) {
+for (let i = 0; i < winBalls.length; i++) {
   setTimeout(() => {
     showBall(winBalls[i], $result);
   }, 1000 * (i + 1));
 }
+
+// // var를 쓰고 클로져 문제 해결
+// for (var i = 0; i < winBalls.length; i++) {
+//   (function (j) {
+//     setTimeout(() => {
+//       showBall(winBalls[j], $result);
+//     }, 1000 * (j + 1));
+//   })(i);
+// }
+
 setTimeout(() => {
   showBall(bonus, $bonus);
 }, 1000 * 7);

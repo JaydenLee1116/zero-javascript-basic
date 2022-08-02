@@ -49,13 +49,76 @@
         $computer.style.backgroundSize = 'auto 200px';
       };
 
-      setInterval(changeComputerHand, 50);
+      let intervalId = setInterval(changeComputerHand, 50);
 
+      // 🌟 1. 이벤트를 제거하고 다시 추가하는 방식
+      // const clickButton = () => {
+      //   clearInterval(intervalId);
+      //   $rock.removeEventListener('click', clickButton);
+      //   $scissors.removeEventListener('click', clickButton);
+      //   $paper.removeEventListener('click', clickButton);
+      //   setTimeout(() => {
+      //     intervalId = setInterval(changeComputerHand, 50);
+      //     $rock.addEventListener('click', clickButton);
+      //     $scissors.addEventListener('click', clickButton);
+      //     $paper.addEventListener('click', clickButton); // 다시 시작하는 setInterval에 대해선 다시 변수에 할당해주어야합니다.
+      //   }, 1000);
+      // };
+
+      // $rock.addEventListener('click', clickButton);
+      // $scissors.addEventListener('click', clickButton);
+      // $paper.addEventListener('click', clickButton);
+
+      // 🌟 가위바위보 경우의 수를 좀더 깔끔하게 하기 위한 테이블
+      const scoreTable = {
+        rock: 0,
+        scissors: 1,
+        paper: -1,
+      };
+
+      // 🌟 2. clickable이라는 변수를 통해 제어하는 방식
+      let score = 0;
+      let clickable = true;
+      const clickButton = () => {
+        if (clickable) {
+          clearInterval(intervalId);
+          clickable = false;
+          const myChoice =
+            event.target.textContent === '바위'
+              ? 'rock'
+              : event.target.textContent === '가위'
+              ? 'scissors'
+              : 'paper';
+
+          const myScore = scoreTable[myChoice];
+          const computerScore = scoreTable[computerChoice];
+          let diff = myScore - computerScore;
+          let message;
+          if (diff === 2 || diff === -1) {
+            score++;
+            message = '승리';
+          } else if (diff === -2 || diff === 1) {
+            score--;
+            message = '패배';
+          } else {
+            message = '무승부';
+          }
+          $score.textContent = `결과: ${message}입니다. 🤩 총점: ${score}`;
+          setTimeout(() => {
+            clickable = true;
+            intervalId = setInterval(changeComputerHand, 50);
+          }, 1000);
+        }
+      };
+
+      $rock.addEventListener('click', clickButton);
+      $scissors.addEventListener('click', clickButton);
+      $paper.addEventListener('click', clickButton);
       /*
       🌟 아래와 같이 setTimeout을 이용해서 같은 동작을 표현할 수 있습니다.
       단, 엄밀히 따지면 동작이 조금 다르긴 합니다.
       setInterval을 사용하는 편이 좀더 정확한 시간을 맞추기 위해 좋습니다.
-      
+
       const changeComputerHand = () => {
         if (computerChoice === 'scissors') {
           computerChoice = 'rock';

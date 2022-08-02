@@ -27,8 +27,49 @@
       const $scissors = document.querySelector('#scissors');
       const $paper = document.querySelector('#paper');
       const IMG_URL = './rsp.png';
-      $computer.style.background = url(`${IMG_URL} 0 0`);
+      $computer.style.background = `url(${IMG_URL}) 0 0`;
       $computer.style.backgroundSize = 'auto 200px';
+
+      const rspX = {
+        scissors: '0',
+        rock: '-220px',
+        paper: '-440px',
+      };
+
+      let computerChoice = 'scissors';
+      const changeComputerHand = () => {
+        if (computerChoice === 'scissors') {
+          computerChoice = 'rock';
+        } else if (computerChoice === 'rock') {
+          computerChoice = 'paper';
+        } else if (computerChoice === 'paper') {
+          computerChoice = 'scissors';
+        }
+        $computer.style.background = `url(${IMG_URL}) ${rspX[computerChoice]} 0`;
+        $computer.style.backgroundSize = 'auto 200px';
+      };
+
+      setInterval(changeComputerHand, 50);
+
+      /*
+      🌟 아래와 같이 setTimeout을 이용해서 같은 동작을 표현할 수 있습니다.
+      단, 엄밀히 따지면 동작이 조금 다르긴 합니다.
+      setInterval을 사용하는 편이 좀더 정확한 시간을 맞추기 위해 좋습니다.
+      
+      const changeComputerHand = () => {
+        if (computerChoice === 'scissors') {
+          computerChoice = 'rock';
+        } else if (computerChoice === 'rock') {
+          computerChoice = 'paper';
+        } else if (computerChoice === 'paper') {
+          computerChoice = 'scissors';
+        }
+        $computer.style.background = `url(${IMG_URL}) ${rspX[computerChoice]} 0`;
+        $computer.style.backgroundSize = 'auto 200px';
+        setTimeout(changeComputerHand, 50)
+      };
+      setTimeout(changeComputerHand, 50);
+      */
     </script>
   </body>
 </html>

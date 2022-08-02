@@ -70,14 +70,16 @@
       // $paper.addEventListener('click', clickButton);
 
       // 🌟 가위바위보 경우의 수를 좀더 깔끔하게 하기 위한 테이블
-      const scoreTable = {
+      const numberTable = {
         rock: 0,
         scissors: 1,
         paper: -1,
       };
 
       // 🌟 2. clickable이라는 변수를 통해 제어하는 방식
-      let score = 0;
+      let count = 0;
+      let myScore = 0;
+      let computerScore = 0;
       let clickable = true;
       const clickButton = () => {
         if (clickable) {
@@ -90,20 +92,40 @@
               ? 'scissors'
               : 'paper';
 
-          const myScore = scoreTable[myChoice];
-          const computerScore = scoreTable[computerChoice];
-          let diff = myScore - computerScore;
+          const myNumber = numberTable[myChoice];
+          const computerNumber = numberTable[computerChoice];
+          let diff = myNumber - computerNumber;
           let message;
           if (diff === 2 || diff === -1) {
-            score++;
+            myScore++;
+            count++;
             message = '승리';
           } else if (diff === -2 || diff === 1) {
-            score--;
+            computerScore++;
+            count++;
             message = '패배';
           } else {
             message = '무승부';
           }
-          $score.textContent = `결과: ${message}입니다. 🤩 총점: ${score}`;
+
+          if (myScore >= 3) {
+            alert('축하드립니다! 승리하였습니다.');
+            myScore = 0;
+            computerScore = 0;
+            count = 0;
+          } else if (computerScore >= 3) {
+            alert('안타깝습니다! 패배하였습니다.');
+            myScore = 0;
+            computerScore = 0;
+            count = 0;
+          } else if (count >= 5) {
+            alert('무승부입니다!');
+            myScore = 0;
+            computerScore = 0;
+            count = 0;
+          }
+
+          $score.textContent = `결과: ${message}입니다. 🤩 내 점수: ${myScore} 컴퓨터 점수: ${computerScore}`;
           setTimeout(() => {
             clickable = true;
             intervalId = setInterval(changeComputerHand, 50);
@@ -114,6 +136,7 @@
       $rock.addEventListener('click', clickButton);
       $scissors.addEventListener('click', clickButton);
       $paper.addEventListener('click', clickButton);
+
       /*
       🌟 아래와 같이 setTimeout을 이용해서 같은 동작을 표현할 수 있습니다.
       단, 엄밀히 따지면 동작이 조금 다르긴 합니다.
